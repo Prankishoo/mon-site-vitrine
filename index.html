@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Site Vitrine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: #007bff;
+            color: white;
+            padding: 20px;
+        }
+        section {
+            padding: 20px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        // Fonction async pour récupérer l'IP et l'envoyer au serveur
+        async function logVisitor() {
+            const ipResponse = await fetch("https://api64.ipify.org?format=json");
+            const ipData = await ipResponse.json();
+            await fetch("http://176.186.42.57:3000/api/save-visitor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ip: ipData.ip,  // IP publique du visiteur
+                    country: "Inconnu",
+                    city: "Inconnu",
+                    region: "Inconnu"
+                })
+            });
+        }
+
+        // Appel de la fonction pour envoyer les données au serveur
+        logVisitor();
+    </script>
+</head>
+<body>
+    <header>
+        
